@@ -1,0 +1,41 @@
+Problem: Analyze the given schedule of transactions for conflict-serializability.
+
+Steps to Solve:
+
+1. Identify Transactions and Operations:
+   - List each transaction and their operations (Read - R, Write - W, Commit - COM) on the data items.
+   - In this problem:
+     - T1: R(A), R(C), W(B), COM
+     - T2: R(A), W(A), COM
+     - T3: R(A), R(C), W(B), COM
+
+2. Check for Conflicting Operations:
+   - Conflicts occur when two transactions access the same data item, and at least one of the operations is a Write.
+   - Types of conflicts:
+     - Write-Read (W-R): One transaction writes a data item that another transaction reads.
+     - Read-Write (R-W): One transaction reads a data item that another transaction writes.
+     - Write-Write (W-W): Two transactions write to the same data item.
+   - Find all conflicts:
+     - Between T1 and T2: R(A) in T1 and W(A) in T2 (R-W conflict).
+     - Between T1 and T3: W(B) in T1 and W(B) in T3 (W-W conflict).
+     - Between T2 and T3: W(A) in T2 and R(A) in T3 (W-R conflict).
+
+3. Draw the Conflict Serialization Graph:
+   - Create a node for each transaction (T1, T2, T3).
+   - Draw directed edges based on conflicts:
+     - From T1 to T2 due to R(A) in T1 and W(A) in T2.
+     - From T1 to T3 due to W(B) in T1 and W(B) in T3.
+     - From T2 to T3 due to W(A) in T2 and R(A) in T3.
+
+4. Check for Cycles in the Graph:
+   - If the graph has no cycles, the schedule is conflict-serializable.
+   - If there are cycles, the schedule is not conflict-serializable.
+   - In this problem, the graph is acyclic, so the schedule is conflict-serializable.
+
+Summary:
+- Nodes: T1, T2, T3
+- Edges:
+   - T1 → T2
+   - T1 → T3
+   - T2 → T3
+- Result: The schedule is conflict-serializable because the graph has no cycles.
